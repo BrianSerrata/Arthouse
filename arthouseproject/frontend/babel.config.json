@@ -1,0 +1,16 @@
+// WHAT THIS FILE DOES: babel makes code compatible with older browsers
+
+{
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "10"
+          }
+        }
+      ],
+      "@babel/preset-react"
+    ],
+    "plugins": ["@babel/plugin-proposal-class-properties"]
+}
