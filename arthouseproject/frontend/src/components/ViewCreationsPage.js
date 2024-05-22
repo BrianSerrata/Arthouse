@@ -72,8 +72,8 @@ export default class ViewCreationsPage extends Component {
                 ) : (
                     <Grid container spacing={2} style={{ overflowY: 'auto', maxHeight: '70vh' }}>
                         {displayedImages.map((creation, index) => (
-                            <Grid item key={index} xs={12} sm={6} md={4}>
-                                <img src={creation.image} alt={creation.description} style={{ width: '100%' }} />
+                            <Grid item key={index} xs={12} sm={6} md={4} className="image-container">
+                                <img src={creation.image} alt={creation.description} style={{ width: '100%' }}/>
                             </Grid>
                         ))}
                     </Grid>

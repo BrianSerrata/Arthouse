@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { createRoot } from "react-dom/client"; // Import createRoot
-import HomePage from "./Homepage"
+import HomePage from "./Homepage";
+import "/static/css/index.css";
+
 
 export default class App extends Component {
     constructor(props) {
