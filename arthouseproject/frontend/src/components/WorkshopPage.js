@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
+import { Grid, Typography, TextField, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
-import { useNavigate } from "react-router-dom";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -33,11 +30,17 @@ const WorkshopPage = () => {
 
         console.log("made it here");
 
-        fetch('/api/create', requestOptions) // Make sure the URL matches your backend setup
+        // Send request to Django backend to generate image and save URL
+        fetch('/api/create', requestOptions) // Ensure the URL matches your Django endpoint
         .then(response => response.json())
         .then(data => {
-            console.log('Redirecting to /image/' + data.description);
-            navigate('/image/' + data.description);
+            if (data.error) {
+                setError(data.error);
+            } else {
+                setGeneratedImage(data.image_url);
+                console.log('Redirecting to /image/' + data.description);
+                navigate('/image/' + data.description);
+            }
         })
         .catch(error => {
             console.error('Error:', error);
@@ -64,6 +67,8 @@ const WorkshopPage = () => {
             <Button variant="contained" color="primary" onClick={generateButtonPressed} style={{ marginTop: 20 }}>
                 Generate
             </Button>
+            {error && <Typography color="error">{error}</Typography>}
+            {generatedImage && <img src={generatedImage} alt="Generated" style={{ marginTop: 20, maxWidth: '100%' }} />}
         </Grid>
     );
 };

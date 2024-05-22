@@ -6,5 +6,5 @@ from .views import ImageView, CreateImageView, GetImage
 urlpatterns = [
     path('images', ImageView.as_view()),
     path('create', CreateImageView.as_view()),
-    path('get-image', GetImage.as_view())
+    path('get-image', GetImage.as_view()),
 ]
