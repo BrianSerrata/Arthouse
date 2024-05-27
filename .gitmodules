@@ -1,0 +1,3 @@
+[submodule "external_libs/suno-api"]
+	path = external_libs/suno-api
+	url = https://github.com/gcui-art/suno-api

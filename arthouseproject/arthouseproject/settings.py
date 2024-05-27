@@ -1,3 +1,10 @@
+import sys
+import os
+
+# Add external_libs to the Python path
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.join(BASE_DIR, 'external_libs'))
+
 """
 Django settings for arthouseproject project.
 

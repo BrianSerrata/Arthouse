@@ -6,9 +6,11 @@ import {
     Link,
 } from "react-router-dom";
 import { Grid, Typography, Button, Container, Card, CardContent, CardActions } from "@mui/material";
-import WorkshopPage from "./WorkshopPage";
+import ImageWorkshopPage from "./ImageWorkshopPage";
 import ViewCreationsPage from "./ViewCreationsPage";
 import Image from "./Image";
+import MusicWorkshopPage from "./MusicWorkshopPage";
+import WorkshopPage from "./WorkshopPage";
 
 class HomePage extends Component {
     render() {
@@ -16,9 +18,11 @@ class HomePage extends Component {
             <Router>
                 <Routes>
                     <Route path='/' element={<Home />} />
-                    <Route path='/create' element={<WorkshopPage />} />
+                    <Route path='/create_image' element={<ImageWorkshopPage />} />
+                    <Route path='/create_song' element={<MusicWorkshopPage />} />
                     <Route path='/view' element={<ViewCreationsPage />} />
                     <Route path='/image/:description' element={<Image />} />
+                    <Route path='/create' element={<WorkshopPage />} />
                 </Routes>
             </Router>
         );
@@ -76,10 +80,10 @@ const Home = () => {
                             <Card>
                                 <CardContent className="action-card">
                                     <Typography variant="h5" component="div">
-                                        Generate an Image
+                                        Generate art
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary">
-                                        Use our AI-powered tool to create stunning images.
+                                        Use our AI-powered tools to create stunning art!
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
