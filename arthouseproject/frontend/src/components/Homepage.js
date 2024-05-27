@@ -5,12 +5,14 @@ import {
     Route,
     Link,
 } from "react-router-dom";
-import { Grid, Typography, Button, Container, Card, CardContent, CardActions } from "@mui/material";
+import { Grid, Typography, Button, Container, Card, CardContent, CardActions, Toolbar, CssBaseline } from "@mui/material";
 import ImageWorkshopPage from "./ImageWorkshopPage";
 import ViewCreationsPage from "./ViewCreationsPage";
 import Image from "./Image";
 import MusicWorkshopPage from "./MusicWorkshopPage";
 import WorkshopPage from "./WorkshopPage";
+import EditImagePage from "./EditImagePage";
+import Navbar from "./Navbar";
 
 class HomePage extends Component {
     render() {
@@ -23,6 +25,7 @@ class HomePage extends Component {
                     <Route path='/view' element={<ViewCreationsPage />} />
                     <Route path='/image/:description' element={<Image />} />
                     <Route path='/create' element={<WorkshopPage />} />
+                    <Route path='/edit_image' element={<EditImagePage />} />
                 </Routes>
             </Router>
         );

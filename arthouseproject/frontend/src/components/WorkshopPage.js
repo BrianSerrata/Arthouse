@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Tabs, Tab, Box, Container } from "@mui/material";
-import WorkshopPage from "./ImageWorkshopPage";
+import ImageWorkshopPage from "./ImageWorkshopPage";
 import MusicWorkshopPage from "./MusicWorkshopPage";
 
-const Test = () => {
+const WorkshopPage = () => {
     const [selectedTab, setSelectedTab] = useState(0);
 
     const handleChange = (event, newValue) => {
@@ -24,11 +24,11 @@ const Test = () => {
                 <Tab label="Music Workshop" />
             </Tabs>
             <Box p={2}>
-                {selectedTab === 0 && <WorkshopPage />}
+                {selectedTab === 0 && <ImageWorkshopPage />}
                 {selectedTab === 1 && <MusicWorkshopPage />}
             </Box>
         </Container>
     );
 };
 
-export default Test;
+export default WorkshopPage;

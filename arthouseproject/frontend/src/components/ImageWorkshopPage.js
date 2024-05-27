@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Grid, Typography, TextField, Button, CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
+import Navbar from "./Navbar";
 
 const ImageWorkshopPage = () => {
     const [description, setDescription] = useState("");
@@ -26,8 +27,6 @@ const ImageWorkshopPage = () => {
             }),
         };
 
-        console.log("made it here");
-
         fetch('/api/create_image', requestOptions)
         .then(response => response.json())
         .then(data => {
@@ -35,12 +34,8 @@ const ImageWorkshopPage = () => {
                 setError(data.error);
                 setLoading(false);
             } else {
-                setGeneratedImage(data.image_url);
-                console.log('Redirecting to /image/' + data.description);
+                setGeneratedImage(data.image);
                 setLoading(false);
-                setTimeout(() => {
-                    navigate('/image/' + data.description);
-                }, 500); // Add a slight delay before navigating
             }
         })
         .catch(error => {
@@ -48,12 +43,14 @@ const ImageWorkshopPage = () => {
             console.error('Error:', error);
             setError(error);
         });
+    };
 
-        console.log('got past the fetch');
+    const handleEdit = () => {
+        navigate('/edit_image', { state: { generatedImage } });
     };
 
     return (
-        <Grid container spacing={2} direction="column" alignItems="center" justifyContent="center" style={{ minHeight: '100vh' }}>
+        <Grid container spacing={2} direction="column" alignItems="center" justifyContent="center" style={{ minHeight: '100vh', padding: '20px' }}>
             <Typography variant="h4" gutterBottom>
                 Image Generation Workshop
             </Typography>
@@ -74,7 +71,16 @@ const ImageWorkshopPage = () => {
                 </Button>
             )}
             {error && <Typography color="error" style={{ marginTop: 20 }}>{error}</Typography>}
-            {generatedImage && <img src={generatedImage} alt="Generated" style={{ marginTop: 20, maxWidth: '100%' }} />}
+            {generatedImage && (
+                <>
+                    <div className="image-workshop-image-container">
+                        <img src={generatedImage} alt="Generated" />
+                    </div>
+                    <Button variant="contained" color="secondary" onClick={handleEdit} style={{ marginTop: 20 }}>
+                        Edit Image
+                    </Button>
+                </>
+            )}
         </Grid>
     );
 };
