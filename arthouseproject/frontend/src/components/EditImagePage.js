@@ -9,6 +9,12 @@ import {
   AppBar,
   Toolbar,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  CircularProgress,
 } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
@@ -16,6 +22,7 @@ import TuneIcon from "@mui/icons-material/Tune";
 import CropIcon from "@mui/icons-material/Crop";
 import RotateLeftIcon from "@mui/icons-material/RotateLeft";
 import RotateRightIcon from "@mui/icons-material/RotateRight";
+import AddIcon from "@mui/icons-material/Add";
 
 const EditImagePage = () => {
   const location = useLocation();
@@ -28,6 +35,10 @@ const EditImagePage = () => {
   const [rotation, setRotation] = useState(0);
   const [activeTool, setActiveTool] = useState(null);
   const [images, setImages] = useState(generatedImage ? [generatedImage] : []);
+  const [showModal, setShowModal] = useState(false);
+  const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     // Fetch user-created images
@@ -79,6 +90,39 @@ const EditImagePage = () => {
     setSharpness(100);
     setRotation(0);
     setActiveTool(null);
+  };
+
+  const generateButtonPressed = () => {
+    setLoading(true);
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        description: description,
+      }),
+    };
+
+    fetch("/api/create_image", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          setError(data.error);
+          setLoading(false);
+        } else {
+          setSelectedImage(data.image);
+          setImages([...images, data]);
+          setLoading(false);
+          setShowModal(false);
+          setDescription(""); // Reset the description
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error("Error:", error);
+        setError(error);
+      });
   };
 
   return (
@@ -159,6 +203,12 @@ const EditImagePage = () => {
           <IconButton onClick={() => handleToolClick("crop")}>
             <CropIcon style={{ color: "#fff" }} />
           </IconButton>
+          <IconButton
+            style={{ position: "absolute", left: 16 }}
+            onClick={() => setShowModal(true)}
+          >
+            <AddIcon style={{ color: "#fff" }} />
+          </IconButton>
         </Toolbar>
         {activeTool && (
           <Box
@@ -197,6 +247,61 @@ const EditImagePage = () => {
           </Box>
         )}
       </AppBar>
+
+      <Dialog open={showModal} onClose={() => { setShowModal(false); setDescription(""); }}>
+        <DialogTitle style={{ backgroundColor: "#333", color: "#fff" }}>Generate New Image</DialogTitle>
+        <DialogContent style={{ backgroundColor: "#333" }}>
+        <TextField
+            label="Image Description"
+            variant="outlined"
+            fullWidth
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            helperText="Enter a description for the image you want to generate."
+            placeholder="Image Description" // Added placeholder text
+            margin="dense" // Adjust the margin for better spacing
+            InputLabelProps={{ shrink: true }} // Ensure the label doesn't overlap the input
+            style={{ backgroundColor: "#333" }}
+            sx={{
+                '& .MuiFormHelperText-root': {
+                  color: '#fff', // Change this to your desired color for helper text
+                },
+                input: {
+                  color: '#fff', // Change this to your desired color for input text
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#fff', // Change this to your desired color for label text
+                },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: '#fff', // Initial border color
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#fff', // Hover border color
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'blue', // Focused border color, change this to your desired shade of blue
+                  },
+                },
+              }}
+        />
+
+          {loading && (
+            <Box style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
+              <CircularProgress />
+            </Box>
+          )}
+          {error && <Typography color="error" style={{ marginTop: 20 }}>{error}</Typography>}
+        </DialogContent>
+        <DialogActions style={{ backgroundColor: "#333" }}>
+          <Button onClick={() => { setShowModal(false); setDescription(""); }} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={generateButtonPressed} color="primary" disabled={loading}>
+            Generate
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
