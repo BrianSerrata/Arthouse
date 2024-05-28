@@ -12,6 +12,7 @@ import Image from "./Image";
 import MusicWorkshopPage from "./MusicWorkshopPage";
 import WorkshopPage from "./WorkshopPage";
 import EditImagePage from "./EditImagePage";
+import EditSongPage from "./EditSongPage";
 import Navbar from "./Navbar";
 
 class HomePage extends Component {
@@ -26,6 +27,7 @@ class HomePage extends Component {
                     <Route path='/image/:description' element={<Image />} />
                     <Route path='/create' element={<WorkshopPage />} />
                     <Route path='/edit_image' element={<EditImagePage />} />
+                    <Route path='/edit_song' element={<EditSongPage />} />
                 </Routes>
             </Router>
         );

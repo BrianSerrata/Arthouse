@@ -13,6 +13,9 @@ import requests
 import time
 import openai
 from openai.types import ImageGenerateParams, ImagesResponse
+from django.http import JsonResponse
+from django.conf import settings
+import os
 
 # Create your views here.
 
@@ -145,6 +148,7 @@ class CreateSongView(APIView):
                     audio_file_name = f"{audio_file_info['id']}.mp3"
                     audio_file = AudioFile(song=generated_song)
                     audio_file.file.save(audio_file_name, ContentFile(audio_content))
+
                 
                 return Response(SongSerializer(generated_song).data, status=status.HTTP_201_CREATED)
 
@@ -152,6 +156,7 @@ class CreateSongView(APIView):
                 return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 

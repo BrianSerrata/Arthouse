@@ -7,6 +7,7 @@ urlpatterns = [
     path('create_song', index),
     path('create', index),
     path('edit_image', index),
+    path('edit_song', index),
     path('view', index),
     path('image/<str:description>', index)
 ]

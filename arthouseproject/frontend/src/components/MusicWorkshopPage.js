@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Grid, Typography, TextField, Button, CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -27,8 +26,6 @@ const MusicWorkshopPage = () => {
             }),
         };
 
-        console.log("made it here");
-
         fetch('/api/create_song', requestOptions)
         .then(response => response.json())
         .then(data => {
@@ -36,21 +33,25 @@ const MusicWorkshopPage = () => {
                 setError(data.error);
                 setLoading(false);
             } else {
-                setGeneratedSong(data.audio_files); // Assuming the response contains audio file URLs
-                console.log('Redirecting to /song/' + data.id);
+                // Adjust the URLs to use the appropriate server name or IP address
+                const baseURL = 'http://localhost';  // Or use 'http://192.168.1.10' if you prefer
+                const adjustedFiles = data.audio_files.map(file => ({
+                    ...file,
+                    file: baseURL + file.file  // Construct full URL
+                }));
+                setGeneratedSong(adjustedFiles); // Assuming the response contains audio file URLs
                 setLoading(false);
-                setTimeout(() => {
-                    navigate('/song/' + data.id); // Change to your song detail route if needed
-                }, 500); // Add a slight delay before navigating
             }
         })
         .catch(error => {
             setLoading(false);
             console.error('Error:', error);
-            setError(error);
+            setError(error.message);
         });
+    };
 
-        console.log('got past the fetch');
+    const handleEdit = () => {
+        navigate('/edit_song', { state: { generatedSong } });
     };
 
     return (
@@ -76,19 +77,22 @@ const MusicWorkshopPage = () => {
             )}
             {error && <Typography color="error" style={{ marginTop: 20 }}>{error}</Typography>}
             {generatedSong && (
-                <div style={{ marginTop: 20, maxWidth: '100%' }}>
-                    <Typography variant="h6">Generated Songs:</Typography>
-                    {generatedSong.map((file, index) => (
-                        <audio key={index} controls>
-                            <source src={file.file} type="audio/mpeg" />
-                            Your browser does not support the audio element.
-                        </audio>
-                    ))}
-                </div>
+                <>
+                    <div style={{ marginTop: 20, maxWidth: '100%' }}>
+                        {generatedSong.map((file, index) => (
+                            <audio key={index} controls style={{ marginBottom: 20 }}>
+                                <source src={file.file} type="audio/mpeg" />
+                                Your browser does not support the audio element.
+                            </audio>
+                        ))}
+                    </div>
+                    <Button variant="contained" color="secondary" onClick={handleEdit} style={{ marginTop: 20 }}>
+                        Edit Song
+                    </Button>
+                </>
             )}
         </Grid>
     );
 };
 
 export default MusicWorkshopPage;
-
