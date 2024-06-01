@@ -64,6 +64,12 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+    # Add any other origins you need to allow
+]
+
 ROOT_URLCONF = 'arthouseproject.urls'
 
 TEMPLATES = [

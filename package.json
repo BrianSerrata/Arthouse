@@ -4,12 +4,15 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.18",
+    "@wavesurfer/react": "^1.0.6",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "openai": "^4.47.1",
     "pica": "^9.0.1",
     "react-easy-crop": "^5.0.7",
-    "style-loader": "^4.0.0"
+    "style-loader": "^4.0.0",
+    "tone": "^15.0.4",
+    "wavesurfer.js": "^7.7.15"
   },
   "devDependencies": {
     "@babel/core": "^7.24.6",
