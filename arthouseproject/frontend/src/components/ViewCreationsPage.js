@@ -17,7 +17,7 @@ export default class ViewCreationsPage extends Component {
 
     componentDidMount() {
         // Fetch user-created images when the component mounts
-        fetch('/api/images') // Replace with your actual API endpoint
+        fetch('/api/images')
             .then(response => response.json())
             .then(data => {
                 this.setState({ images: data });
