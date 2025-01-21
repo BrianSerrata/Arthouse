@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 const Image = () => {
-    const { description } = useParams(); // Use useParams hook to access route parameters
+    const { description } = useParams();
     const [desc, setDesc] = useState("");
     const [user, setUser] = useState("");
 
