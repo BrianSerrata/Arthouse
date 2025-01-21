@@ -42,7 +42,7 @@ const EditImagePage = () => {
 
   useEffect(() => {
     // Fetch user-created images
-    fetch("/api/images") // Replace with your actual API endpoint
+    fetch("/api/images")
       .then((response) => response.json())
       .then((data) => {
         setImages(data);
@@ -258,29 +258,29 @@ const EditImagePage = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             helperText="Enter a description for the image you want to generate."
-            placeholder="Image Description" // Added placeholder text
-            margin="dense" // Adjust the margin for better spacing
-            InputLabelProps={{ shrink: true }} // Ensure the label doesn't overlap the input
+            placeholder="Image Description"
+            margin="dense"
+            InputLabelProps={{ shrink: true }}
             style={{ backgroundColor: "#333" }}
             sx={{
                 '& .MuiFormHelperText-root': {
-                  color: '#fff', // Change this to your desired color for helper text
+                  color: '#fff',
                 },
                 input: {
-                  color: '#fff', // Change this to your desired color for input text
+                  color: '#fff',
                 },
                 '& .MuiInputLabel-root': {
-                  color: '#fff', // Change this to your desired color for label text
+                  color: '#fff',
                 },
                 '& .MuiOutlinedInput-root': {
                   '& fieldset': {
-                    borderColor: '#fff', // Initial border color
+                    borderColor: '#fff',
                   },
                   '&:hover fieldset': {
-                    borderColor: '#fff', // Hover border color
+                    borderColor: '#fff',
                   },
                   '&.Mui-focused fieldset': {
-                    borderColor: 'blue', // Focused border color, change this to your desired shade of blue
+                    borderColor: 'blue',
                   },
                 },
               }}
