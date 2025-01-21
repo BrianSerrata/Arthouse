@@ -39,7 +39,7 @@ const Home = () => {
 
     useEffect(() => {
         // Fetch user-created images
-        fetch('/api/images') // Replace with your actual API endpoint
+        fetch('/api/images')
             .then(response => response.json())
             .then(data => {
                 setImages(data);
