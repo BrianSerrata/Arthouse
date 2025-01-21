@@ -33,13 +33,13 @@ const MusicWorkshopPage = () => {
                 setError(data.error);
                 setLoading(false);
             } else {
-                // Adjust the URLs to use the appropriate server name or IP address
-                const baseURL = 'http://localhost';  // Or use 'http://192.168.1.10' if you prefer
+                
+                const baseURL = 'http://localhost';
                 const adjustedFiles = data.audio_files.map(file => ({
                     ...file,
                     file: baseURL + file.file  // Construct full URL
                 }));
-                setGeneratedSong(adjustedFiles); // Assuming the response contains audio file URLs
+                setGeneratedSong(adjustedFiles);
                 setLoading(false);
             }
         })
